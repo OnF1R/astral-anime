@@ -17,4 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/my_page', 'MainPageController@index');
+Route::get('/anime', 'AnimeController@index');
+
+Route::get('/anime/create','AnimeController@create');
+
+Route::get('/anime/update','AnimeController@update');
+
+Route::get('/anime/delete','AnimeController@delete');
+
+Route::get('/anime/first_or_create','AnimeController@firstOrCreate');
+
+Route::get('/anime/update_or_create','AnimeController@updateOrCreate');
