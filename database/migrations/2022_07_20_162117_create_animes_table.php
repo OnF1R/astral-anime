@@ -24,6 +24,8 @@ class CreateAnimesTable extends Migration
             $table->unsignedBigInteger('views')->nullable();
             $table->boolean('on_going');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
