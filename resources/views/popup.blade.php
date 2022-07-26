@@ -9,7 +9,7 @@ $animeDetails = json_decode($jsonAnimeDetails,true);
             <div class="modal-body">
                 <div class="row">
                     <div class="col-5 position-relative"><img src="{{ $animeData[$i]['animeImg'] }}" alt="" class="img_main_anime_display_hot" style="height: 400px;">
-                    <div class="position-absolute popup_buttons"><button type="button" class="btn btn-primary">Watch</button>
+                    <div class="position-absolute popup_buttons"><a href="{{ route('anime.page', ['id' => $animeData[$i]['animeId']])}}"><button type="button" class="btn btn-primary">Watch</button></a>
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Add to list
                             </button>
