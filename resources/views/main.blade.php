@@ -4,25 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+    @include ('headlinks')
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar mt-3 sticky-top">
-        <div class="container header">
-            <a href="{{ route('anime.index') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
-                <h3>Astral</h3>
-                <img src="{{asset('images/logo/logo.png')}}" width="96" height="96" class="rounded-circle ms-4" alt="">
-            </a>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+    @include('header')
     <div class="main_anime_trend_container rounded container mt-4  position-relative">
         <div class="container_name_poster position-absolute">Trending</div>
             <div class="row anime_block rounded text-center">
@@ -115,13 +101,6 @@
                         </div> -->
         </div>
     </div>
-    <footer class="mt-4">
-        <div class="footer_info container">
-
-        </div>
-        <div class="footer_link container navbar-fixed-bottom">
-
-        </div>
-    </footer>
+    @include ('footer')
 </body>
 </html>
