@@ -26,6 +26,23 @@ class AnimeController extends Controller
         return view('main', compact('animeData','getAnimeDetails'));
     }
 
+    public function animePage(Request $request) {
+
+        $animeId = $request->id;
+
+        $animeDetails = 'http://127.0.0.1:3000/anime-details/' . $request->id;
+
+        $vidcdnAnimeEpisodes = 'http://127.0.0.1:3000/vidcdn/watch/';
+
+        $streamsbAnimeEpisodes = 'http://127.0.0.1:3000/streamsb/watch/';
+        
+        $jsonAnimeDetails = file_get_contents($animeDetails);
+        
+        $animeData = json_decode($jsonAnimeDetails,true);
+        
+        return view('anime-page', compact('animeData','animeId','vidcdnAnimeEpisodes','streamsbAnimeEpisodes'));
+    }
+
     public function create() {
 
         $anime_arr = [
