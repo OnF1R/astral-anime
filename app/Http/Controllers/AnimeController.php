@@ -8,14 +8,22 @@ use App\Models\Anime;
 
 class AnimeController extends Controller
 {
+    
+
     public function index() {
-        $first_anime = Anime::find(1);
-        $need_anime = Anime::where('release_year', 2022)->get();
-        $all_animes = Anime::all();
-        foreach ($all_animes as $anime) {
-            dump($anime->name);
-        }
-        dump($need_anime);
+        $popularAnimes = 'http://127.0.0.1:3000/popular';
+
+        $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
+
+        $page = 1;
+
+        $jsonPopularAnime = file_get_contents($popularAnimes . '?page=' . $page);
+
+        $animeData = json_decode($jsonPopularAnime,true);
+
+        //$animes = Anime::where('on_going', '=', '1')->get();
+
+        return view('main', compact('animeData','getAnimeDetails'));
     }
 
     public function create() {

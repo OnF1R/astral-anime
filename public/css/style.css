@@ -1,0 +1,186 @@
+/* Main */
+
+.header {
+    background-color: #444444;
+}
+
+.img_main_anime_display_hot {
+    width: 100%;
+    height: 334px;
+    object-position: center top;
+    object-fit: cover;
+}
+
+.img_main_news {
+    width: 100%;
+    height: 450px;
+    object-position: 25% 25%;
+    object-fit: cover;
+}
+
+.hot-svg {
+    position: absolute;
+    top: 78%;
+    left: 93%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.works_item {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+  
+.works_item:hover .works_image {
+    opacity: .5;
+}
+  
+.works_item:hover .works_info {
+    opacity: 1;
+}
+  
+.works_image {
+    object-fit: cover;
+    display: block;
+    transition: opacity .5s linear;
+}
+  
+.works_info {
+    max-width: 100%;
+    text-align: center;
+    color: white;
+    padding: 0px 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+}
+  
+.works_text{
+    height: 50px;
+    overflow: hidden;
+}
+
+.main_anime_trend_container, .main_news_container, .main_anime_list_container {
+    padding: 25px;
+    background-color: #2C2B2B;
+}
+
+.container_name_poster {
+    z-index: 1;
+    font-size: 32px;
+    background-color: #1F13A9;
+    padding: 10px 25px;
+    top: 6%;
+    left: 6%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.container_name_poster::before {
+    content: '';
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    z-index: 3;
+    bottom: -10px;
+    left: 0;
+    border-top: 10px solid #1F13A9;
+    border-left: 9px solid transparent;
+    width: 0;
+    height: 0;
+}
+
+.anime_block {
+
+}
+
+.anime_name {
+    height: 30px;
+    overflow: hidden;
+    
+}
+
+.popular_anime_main {
+    transition: 0.7s;
+    background-color: #353535;
+    border-bottom: 7px solid grey;
+    overflow: hidden; /* Скрываем всё за контуром */
+}
+
+.popular_anime_main:hover {
+    border-bottom: 7px solid blue;
+}
+
+.popular_anime_main img {
+    transition: 0.7s;
+    overflow: hidden;
+}
+
+.popular_anime_main img:hover{    
+    /* transform: scale(1.1); */
+}
+
+.footer_info {
+    background-color: #1C1C1C;
+    height: 500px;
+}
+
+.footer_link {
+    background-color: #838181;
+    height: 250px;
+}
+
+.rounded_main_popular {
+    border-radius: 20px;
+}
+
+* {
+    color: white ;
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar {
+    --bs-navbar-padding-y: 0;
+}
+
+html, body{
+    background-color: #353535 ;
+}
+
+/* Main */
+
+/* Popup */
+
+button.close {
+    background-color: transparent ;
+    font-size: 20px;
+}
+
+.modal-content {
+    background-color: #4A4A4A ;
+}
+
+.popup_buttons {
+    top: 90%;
+    left: 22%;
+}
+
+.popup_anime_info {
+    text-align: left;
+    background-color: #444444;
+    margin-right: 20px;
+}
+
+.popup_anime_synopsis {
+    text-align: justify;
+    background-color: #434343;
+}
+
+/* Popup */

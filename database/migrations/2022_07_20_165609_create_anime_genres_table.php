@@ -15,6 +15,7 @@ class CreateAnimeGenresTable extends Migration
     {
         Schema::create('anime_genres', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

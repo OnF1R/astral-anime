@@ -13,11 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/anime', 'AnimeController@index');
+Route::get('/', 'AnimeController@index')->name('anime.index');
 
 Route::get('/anime/create','AnimeController@create');
 
