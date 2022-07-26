@@ -184,3 +184,31 @@ button.close {
 }
 
 /* Popup */
+
+/* Anime page */
+
+.anime_page_background {
+    background-color: #1E1E1E;
+}
+
+.anime_page_info_background {
+    background: linear-gradient(to bottom, #4152AA 50%, #1E1E1E 50%);
+}
+
+.anime_page_img_block {
+    text-align: center;
+}
+
+.anime_page_img {
+    width: 330px;
+    height: auto;
+}
+
+.anime_page_info {
+    margin: auto;
+}
+
+.anime_page_synopsis {
+    background-color: #484848;
+}
+/* Anime page */
