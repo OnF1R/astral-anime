@@ -1,7 +1,7 @@
 /* Main */
 
 .header {
-    background-color: #444444;
+    background-color: #2D2F30;
 }
 
 .img_main_anime_display_hot {
@@ -67,13 +67,13 @@
 
 .main_anime_trend_container, .main_news_container, .main_anime_list_container {
     padding: 25px;
-    background-color: #2C2B2B;
+    background-color: #202122;
 }
 
 .container_name_poster {
     z-index: 1;
     font-size: 32px;
-    background-color: #1F13A9;
+    background-color: #5FCEF5;
     padding: 10px 25px;
     top: 6%;
     left: 6%;
@@ -90,7 +90,7 @@
     z-index: 3;
     bottom: -10px;
     left: 0;
-    border-top: 10px solid #1F13A9;
+    border-top: 10px solid #5FCEF5;
     border-left: 9px solid transparent;
     width: 0;
     height: 0;
@@ -108,13 +108,13 @@
 
 .popular_anime_main {
     transition: 0.7s;
-    background-color: #353535;
+    background-color: #2D2F30;
     border-bottom: 7px solid grey;
     overflow: hidden; /* Скрываем всё за контуром */
 }
 
 .popular_anime_main:hover {
-    border-bottom: 7px solid blue;
+    border-bottom: 7px solid #5FCEF5;
 }
 
 .popular_anime_main img {
@@ -151,7 +151,13 @@
 }
 
 html, body{
-    background-color: #353535 ;
+    background-color: #2D2F30;
+}
+
+
+a {
+    color: white;
+    transition: 0.3s all;
 }
 
 /* Main */
@@ -188,11 +194,11 @@ button.close {
 /* Anime page */
 
 .anime_page_background {
-    background-color: #1E1E1E;
+    background-color: #202122
 }
 
 .anime_page_info_background {
-    background: linear-gradient(to bottom, #4152AA 50%, #1E1E1E 50%);
+    background-color: #2D2F30;
 }
 
 .anime_page_img_block {
@@ -200,15 +206,35 @@ button.close {
 }
 
 .anime_page_img {
-    width: 330px;
+    width: 300px;
     height: auto;
 }
 
 .anime_page_info {
     margin: auto;
+
+}
+
+.anime_page_rounded {
+    border-radius: 20px;
+}
+
+.anime_page_info p, .anime_page_info p strong {
+    color: #5FCEF5;
+}
+
+.anime_page_watch_button {
+    background: none;
+    border: 3px solid #5FCEF5;
+    color: #5FCEF5;
 }
 
 .anime_page_synopsis {
-    background-color: #484848;
+
 }
+
+.anime_page_series {
+    
+}
+
 /* Anime page */
