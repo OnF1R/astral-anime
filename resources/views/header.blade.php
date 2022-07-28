@@ -1,5 +1,5 @@
 <nav class="navbar mt-3 sticky-top">
-        <div class="container header">
+        <div class="container-fluid header">
             <a href="{{ route('anime.main') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
                 <h3>Astral</h3>
                 <img src="{{asset('images/logo/logo.png')}}" width="96" height="96" class="rounded-circle ms-4" alt="">
