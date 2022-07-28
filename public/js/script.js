@@ -14,3 +14,13 @@ function onEntry(entry) {
   for (let elm of elements) {
     observer.observe(elm);
   }
+
+
+  function videoPlayerEpisodeLoad() {
+      if (Hls.isSupported()) {
+        var video = document.getElementById('video-{{$animeId}}-2');
+        var hls = new Hls();
+        hls.loadSource('{{$episodeData['sources_bk'][0]['file']}}');
+        hls.attachMedia(video);
+    }
+  }
