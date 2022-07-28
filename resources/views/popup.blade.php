@@ -3,7 +3,7 @@
 $jsonAnimeDetails = file_get_contents($getAnimeDetails . $animeData[$i]['animeId']);
 $animeDetails = json_decode($jsonAnimeDetails,true);
 @endphp
-<div class="modal fade" id="{{ $animeData[$i]['animeId'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="id-{{ $animeData[$i]['animeId'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">

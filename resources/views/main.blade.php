@@ -19,7 +19,7 @@
                         <div class="works_info">
                             <div class="works_title">{{ $animeData[$i]['animeTitle'] }}</div>
                             <div class="works_text">{{ $animeData[$i]['releasedDate'] }}</div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ $animeData[$i]['animeId'] }}">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id-{{$animeData[$i]['animeId']}}">
                                 More...
                             </button>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="works_info">
                             <div class="works_title">{{ $animeData[$i]['animeTitle'] }}</div>
                             <div class="works_text">{{ $animeData[$i]['releasedDate'] }}</div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ $animeData[$i]['animeId'] }}">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id-{{$animeData[$i]['animeId']}}">
                                 More...
                             </button>
                         </div>
@@ -80,7 +80,7 @@
                         <div class="works_info">
                             <div class="works_title">{{ $animeData[$i]['animeTitle'] }}</div>
                             <div class="works_text">{{ $animeData[$i]['releasedDate'] }}</div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ $animeData[$i]['animeId'] }}">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id-{{$animeData[$i]['animeId']}}">
                                 More...
                             </button>
                         </div>
