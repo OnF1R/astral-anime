@@ -15,8 +15,16 @@ function onEntry(entry) {
     observer.observe(elm);
   }
 
+function videoPlayerEpisodeLoadFirstSource() {
+    if (Hls.isSupported()) {
+      var video = document.getElementById('video-{{$animeId}}');
+      var hls = new Hls();
+      hls.loadSource('{{$episodeData['sources'][0]['file']}}');
+      hls.attachMedia(video);
+    }
+  }
 
-  function videoPlayerEpisodeLoad() {
+function videoPlayerEpisodeLoadSecondSource() {
       if (Hls.isSupported()) {
         var video = document.getElementById('video-{{$animeId}}-2');
         var hls = new Hls();
