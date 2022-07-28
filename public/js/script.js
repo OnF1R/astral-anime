@@ -32,3 +32,20 @@ function videoPlayerEpisodeLoadSecondSource() {
         hls.attachMedia(video);
     }
   }
+
+  function changeEpisode(el) {
+    var episode = el.id;
+    var request = new XMLHttpRequest();
+    request.open('GET', '{{$vidcdnAnimeEpisodes}}'+ episode);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+        var episodeUrl = request.response;
+        var video = document.getElementById('video-{{$animeId}}');
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(episodeUrl['sources'][0]['file']);
+          hls.attachMedia(video);
+        }
+    }
+}  
