@@ -11,19 +11,25 @@ class AnimeController extends Controller
     
 
     public function index() {
-        $popularAnimes = 'http://127.0.0.1:3000/popular';
+        $getpopularAnimes = 'http://127.0.0.1:3000/popular';
 
         $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
 
+        $getTopAiring ='http://127.0.0.1:3000/top-airing';
+
         $page = 1;
 
-        $jsonPopularAnime = file_get_contents($popularAnimes . '?page=' . $page);
+        $jsonPopularAnime = file_get_contents($getpopularAnimes . '?page=' . $page);
 
         $animeData = json_decode($jsonPopularAnime,true);
 
+        $jsonTopAiring = file_get_contents($getTopAiring);
+
+        $topAiringData = json_decode($jsonTopAiring, true);
+
         //$animes = Anime::where('on_going', '=', '1')->get();
 
-        return view('main', compact('animeData','getAnimeDetails'));
+        return view('main', compact('animeData','getAnimeDetails', 'topAiringData'));
     }
 
     public function animePage(Request $request) {
@@ -37,10 +43,41 @@ class AnimeController extends Controller
         $streamsbAnimeEpisodes = 'http://127.0.0.1:3000/streamsb/watch/';
         
         $jsonAnimeDetails = file_get_contents($animeDetails);
-        
+
         $animeData = json_decode($jsonAnimeDetails,true);
         
-        return view('anime-page', compact('animeData','animeId','vidcdnAnimeEpisodes','streamsbAnimeEpisodes'));
+        if($firstEpisodeNum = array_search('0', array_column($animeData['episodesList'], 'episodeNum' )))
+        {}
+        else $firstEpisodeNum = array_search('1', array_column($animeData['episodesList'], 'episodeNum' ));
+
+
+        // Vidcdn
+            
+            $firstEpisodeUrlVidcdn = $vidcdnAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
+
+            $jsonFirstEpisodeVidcdn = file_get_contents($firstEpisodeUrlVidcdn);
+
+            $firstEpisodeDataVidcdn = json_decode($jsonFirstEpisodeVidcdn, true);
+
+            $firstEpisodeVidcdnSources = $firstEpisodeDataVidcdn['sources'][0]['file'];
+
+            $firstEpisodeVidcdnSources_bk = $firstEpisodeDataVidcdn['sources_bk'][0]['file'];
+
+        // Vidcdn
+
+        // StreamSB сделать плюс 0 серия
+
+            $firstEpisodeUrlStreamsb = $streamsbAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
+
+            $jsonFirstEpisodeStreamsb = file_get_contents($firstEpisodeUrlStreamsb);
+
+            $firstEpisodeDataStreamsb = json_decode($jsonFirstEpisodeStreamsb, true);
+
+            $firstEpisodeStreamsb = $firstEpisodeDataStreamsb['data'][0]['file'];
+
+        // StreamSB
+
+        return view('anime-page', compact('animeData','animeId','vidcdnAnimeEpisodes','streamsbAnimeEpisodes', 'firstEpisodeVidcdnSources', 'firstEpisodeVidcdnSources_bk', 'firstEpisodeStreamsb'));
     }
 
     public function create() {
