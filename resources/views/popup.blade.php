@@ -35,13 +35,12 @@ $animeDetails = json_decode($jsonAnimeDetails,true);
                     </div>
                     
                 </div>
-                <div class="row mt-4 m-2">
-                    <div class="col popup_anime_synopsis p-2">
+                <div class="w-100 mt-3"></div>
+                    <div class="col popup_anime_synopsis p-3">
                         {{ $animeDetails['synopsis'] }}
                     </div>
                 </div>
                 
-            </div>
         </div>
     </div>
 </div>
