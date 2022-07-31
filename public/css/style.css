@@ -119,6 +119,23 @@
     border-bottom: 7px solid #5FCEF5;
 }
 
+.main_page_watch_button {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: black;
+}
+
+.main_page_watch_button:hover {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
+.main_page_watch_button:active {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+}
+
 .popular_anime_main img {
     transition: 0.7s;
     overflow: hidden;
@@ -143,7 +160,7 @@
 }
 
 * {
-    color: white ;
+    color: #5FCEF5;
     margin: 0px;
     padding: 0px;
 }
@@ -162,8 +179,11 @@ html, body{
 
 
 a {
-    color: white;
     transition: 0.3s all;
+}
+
+a:hover {
+    color: #5FCEF5;
 }
 
 
@@ -180,6 +200,16 @@ a {
     }
     .carousel-inner .carousel-item > div:first-child {
         display: block;
+    }
+
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(100%);
+    }
+    
+    .carousel-inner .carousel-item-start.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-100%);
     }
   }
   
@@ -241,6 +271,38 @@ button.close {
     text-align: justify;
     background-color: #2D2F30;
 }
+
+.popup_watch_button {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: black;
+}
+
+.popup_watch_button:visited {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
+.popup_watch_button:hover {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
+.popup_watch_button:active {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
+.btn.show {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
+
 
 /* Popup */
 
