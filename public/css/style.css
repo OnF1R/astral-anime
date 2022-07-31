@@ -1,5 +1,7 @@
 /* Main */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
 .header {
     background-color: #2D2F30;
 }
@@ -151,8 +153,12 @@
 }
 
 html, body{
-    background-color: #2D2F30;
+    background-color: #2D2F30;    
+    font-family: 'Poppins', sans-serif;
 }
+
+
+
 
 
 a {
@@ -160,7 +166,50 @@ a {
     transition: 0.3s all;
 }
 
+
+.text-color-blue {
+    color: #5FCEF5;
+}
 /* Main */
+
+/* Slider */
+
+@media (max-width: 767px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+  }
+  
+  .carousel-inner .carousel-item.active,
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    display: flex;
+  }
+  
+  /* medium and up screens */
+  @media (min-width: 768px) {
+    
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(20%);
+    }
+    
+    .carousel-inner .carousel-item-start.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-20%);
+    }
+  }
+  
+  .carousel-inner .carousel-item-end,
+  .carousel-inner .carousel-item-start { 
+  transform: translateX(0);
+  }
+  
+
+/* Slider */
 
 /* Popup */
 
@@ -170,7 +219,7 @@ button.close {
 }
 
 .modal-content {
-    background-color: #4A4A4A ;
+    background-color: #202122;
 }
 
 .popup_buttons {
@@ -180,13 +229,17 @@ button.close {
 
 .popup_anime_info {
     text-align: left;
-    background-color: #444444;
-    margin-right: 20px;
+    background-color: #2D2F30;
+    margin-right: 12px;
+}
+
+.popup_anime_info p {
+    color: #5FCEF5;
 }
 
 .popup_anime_synopsis {
     text-align: justify;
-    background-color: #434343;
+    background-color: #2D2F30;
 }
 
 /* Popup */
