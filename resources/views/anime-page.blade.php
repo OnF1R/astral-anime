@@ -40,7 +40,7 @@
             <div class="container anime_page_rounded anime_page_info_background mt-3">
                 <div class="row">
                     <div class="col anime_page_synopsis py-4 px-3">
-                        <p>{{ $animeData['synopsis'] }}</p>
+                        <p>{{$animeData['synopsis']}}</p>
                     </div>
                 </div>
             </div>
@@ -53,23 +53,6 @@
                 .then((response) => response.json())
                 .then((animelist) => console.log(animelist));
         </script> -->
-
-
-        @php
-
-        $episodeUrl = $vidcdnAnimeEpisodes . $animeId . '-' . 'episode' . '-' . '1';
-
-        $jsonEpisodeUrl = file_get_contents($episodeUrl);
-
-        $episodeData = json_decode($jsonEpisodeUrl,true);
-        @endphp
-
-
-
-
-
-
-
 
         <div id="video_player" class="anime_page_video_player mt-5">
             <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
@@ -87,14 +70,15 @@
                     <video id="video-{{$animeId}}" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
                     <script>
                         if (Hls.isSupported()) {
-                            var video = document.getElementById('video-{{$animeId}}');
-                            var hls = new Hls();
-                            hls.loadSource('{{$episodeData['sources'][0]['file']}}');
-                            hls.attachMedia(video);
+                        var video = document.getElementById('video-{{$animeId}}');
+                        var hls = new Hls();
+                        hls.loadSource('{{$firstEpisodeVidcdnSources}}');
+                        hls.loadSource('{{$firstEpisodeVidcdnSources_bk}}');
+                        hls.attachMedia(video);
                         }
                     </script>
                     <div class="anime_page_series">
-                        @for ($i = $animeData['totalEpisodes'] - 1, $j = 1; $i >= 0; $i--, $j++) <a id="{{$animeData['episodesList'][$i]['episodeId']}}" onclick="changeEpisode(this)" href="#video_player">{{$j}}</a>@endfor   
+                        @for ($i = $animeData['totalEpisodes'] - 1; $i >= 0; $i--) <a id="{{$animeData['episodesList'][$i]['episodeId']}}" onclick="changeEpisode(this)" href="#video_player">{{$animeData['episodesList'][$i]['episodeNum']}}</a>@endfor   
                     </div>
                 </div>
                 <div class="tab-pane fade" id="streamsb" role="tabpanel" aria-labelledby="streamsb-tab">
@@ -103,7 +87,7 @@
                         if (Hls.isSupported()) {
                             var video = document.getElementById('video-{{$animeId}}-2');
                             var hls = new Hls();
-                            hls.loadSource('{{$episodeData['sources_bk'][0]['file']}}');
+                            hls.loadSource('{{$firstEpisodeStreamsb}}');
                             hls.attachMedia(video);
                         }
                     </script>
@@ -111,43 +95,24 @@
             </div>
         </div>
     </div>
-    <script>
-
-        function changeEpisode(el) {
-
-            
-
-            var episode = el.id;
-
-            var request = new XMLHttpRequest();
-
-            request.open('GET', '{{$vidcdnAnimeEpisodes}}'+ episode);
-
-            request.responseType = 'json';
-
-            request.send();
-
-            request.onload = function() {
-                var episodeUrl = request.response;
-                var video = document.getElementById('video-{{$animeId}}');
-                if (Hls.isSupported()) {
-                            var hls = new Hls();
-                            hls.loadSource(episodeUrl['sources'][0]['file']);
-                            hls.attachMedia(video);
-                        }
-
-                // video.setAttribute("src", episodeUrl['sources'][0]['file']);
-
-                // video.load();
-            }
-
-            
-
-
-
-        }
-    </script>
     @include ('footer')
 </body>
-
+<script>
+  function changeEpisode(el) {
+    var episode = el.id;
+    var request = new XMLHttpRequest();
+    request.open('GET', '{{$vidcdnAnimeEpisodes}}'+ episode);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+        var episodeUrl = request.response;
+    var video = document.getElementById('video-{{$animeId}}');
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(episodeUrl['sources'][0]['file']);
+          hls.attachMedia(video);
+        }
+    }
+}  
+</script>
 </html>
