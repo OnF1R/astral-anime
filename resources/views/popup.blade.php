@@ -1,14 +1,11 @@
 <!-- Modal -->
-@php
-$jsonAnimeDetails = file_get_contents($getAnimeDetails . $anime['animeId']);
-$animeDetails = json_decode($jsonAnimeDetails,true);
-@endphp
+
 <div class="modal fade" id="id-{{ $anime['animeId'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-5 position-relative"><img src="{{ $anime['animeImg'] }}" alt="" class="img_main_anime_display_hot" style="height: 400px;">
+                    <div class="col-5 position-relative"><img loading="lazy" src="{{ $anime['animeImg'] }}" alt="" class="img_main_anime_display_hot" style="height: 400px;">
                     <div class="position-absolute popup_buttons"><a href="{{ route('anime.page', ['id' => $anime['animeId']])}}"><button type="button" class="btn popup_watch_button">Watch</button></a>
                     <button class="btn popup_watch_button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Add to list
