@@ -33,21 +33,21 @@
     margin: 0px;
     padding: 0px;
 }
-  
+
 .works_item:hover .works_image {
     opacity: .5;
 }
-  
+
 .works_item:hover .works_info {
     opacity: 1;
 }
-  
+
 .works_image {
     object-fit: cover;
     display: block;
     transition: opacity .5s linear;
 }
-  
+
 .works_info {
     max-width: 100%;
     text-align: center;
@@ -61,13 +61,15 @@
     opacity: 0;
     transition: opacity 0.2s linear;
 }
-  
-.works_text{
+
+.works_text {
     height: 50px;
     overflow: hidden;
 }
 
-.main_anime_trend_container, .main_news_container, .main_anime_list_container {
+.main_anime_trend_container,
+.main_news_container,
+.main_anime_list_container {
     padding: 25px;
     background-color: #202122;
 }
@@ -98,21 +100,20 @@
     height: 0;
 }
 
-.anime_block {
-
-}
+.anime_block {}
 
 .anime_name {
     height: 30px;
     overflow: hidden;
-    
+
 }
 
 .popular_anime_main {
     transition: 0.7s;
     background-color: #2D2F30;
     border-bottom: 7px solid grey;
-    overflow: hidden; /* Скрываем всё за контуром */
+    overflow: hidden;
+    /* Скрываем всё за контуром */
 }
 
 .popular_anime_main:hover {
@@ -141,7 +142,7 @@
     overflow: hidden;
 }
 
-.popular_anime_main img:hover{    
+.popular_anime_main img:hover {
     /* transform: scale(1.1); */
 }
 
@@ -169,8 +170,9 @@
     --bs-navbar-padding-y: 0;
 }
 
-html, body{
-    background-color: #2D2F30;    
+html,
+body {
+    background-color: #2D2F30;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -190,61 +192,63 @@ a:hover {
 .text-color-blue {
     color: #5FCEF5;
 }
+
 /* Main */
 
 /* Slider */
 
 @media (max-width: 767px) {
-    .carousel-inner .carousel-item > div {
+    .carousel-inner .carousel-item>div {
         display: none;
     }
-    .carousel-inner .carousel-item > div:first-child {
+
+    .carousel-inner .carousel-item>div:first-child {
         display: block;
     }
 
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
-      transform: translateX(100%);
+        transform: translateX(100%);
     }
-    
-    .carousel-inner .carousel-item-start.active, 
+
+    .carousel-inner .carousel-item-start.active,
     .carousel-inner .carousel-item-prev {
-      transform: translateX(-100%);
+        transform: translateX(-100%);
     }
-  }
-  
-  .carousel-inner .carousel-item.active,
-  .carousel-inner .carousel-item-next,
-  .carousel-inner .carousel-item-prev {
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
     display: flex;
-  }
-  
-  /* medium and up screens */
-  @media (min-width: 768px) {
-    
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
-      transform: translateX(20%);
+        transform: translateX(20%);
     }
-    
-    .carousel-inner .carousel-item-start.active, 
+
+    .carousel-inner .carousel-item-start.active,
     .carousel-inner .carousel-item-prev {
-      transform: translateX(-20%);
+        transform: translateX(-20%);
     }
-  }
-  
-  .carousel-inner .carousel-item-end,
-  .carousel-inner .carousel-item-start { 
-  transform: translateX(0);
-  }
-  
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start {
+    transform: translateX(0);
+}
+
 
 /* Slider */
 
 /* Popup */
 
 button.close {
-    background-color: transparent ;
+    background-color: transparent;
     font-size: 20px;
 }
 
@@ -302,6 +306,12 @@ button.close {
     color: white;
 }
 
+.btn:focus {
+    background: #5FCEF5;
+    border: 3px solid #5FCEF5;
+    color: white;
+}
+
 
 
 /* Popup */
@@ -334,7 +344,8 @@ button.close {
     border-radius: 20px;
 }
 
-.anime_page_info p, .anime_page_info p strong {
+.anime_page_info p,
+.anime_page_info p strong {
     color: #5FCEF5;
 }
 
@@ -344,12 +355,28 @@ button.close {
     color: #5FCEF5;
 }
 
-.anime_page_synopsis {
-
-}
-
-.anime_page_series {
+.anime_page_episode_link_block {
+    background-color: #2D2F30;
+    border-right: 2px solid #5FCEF5;
+   
     
 }
+
+.anime_page_episode_link {
+    color: #5FCEF5;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: 2%;
+}
+
+.anime_page_episode_num_form {
+    display: inline-block;
+    width: auto;
+}
+
+.anime_page_synopsis {}
+
+.anime_page_series {}
 
 /* Anime page */

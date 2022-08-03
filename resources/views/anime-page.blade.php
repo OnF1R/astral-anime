@@ -16,7 +16,7 @@
         <div class="container anime_page_rounded anime_page_info_background">
             <div class="row py-4 mb-4">
                 <div class="col-4 anime_page_info anime_page_img_block">
-                    <img src="{{$animeData['animeImg']}}" class="anime_page_rounded anime_page_img" alt="">
+                    <img loading="lazy" src="{{$animeData['animeImg']}}" class="anime_page_rounded anime_page_img" alt="">
                 </div>
                 <div class="col anime_page_info">
                     <p style="font-size: 150%"><strong>Title: {{ $animeData['animeTitle'] }}</strong></p>
@@ -37,13 +37,13 @@
                 </div>
             </div>
         </div>
-            <div class="container anime_page_rounded anime_page_info_background mt-3">
-                <div class="row">
-                    <div class="col anime_page_synopsis py-4 px-3">
-                        <p>{{$animeData['synopsis']}}</p>
-                    </div>
+        <div class="container anime_page_rounded anime_page_info_background mt-3">
+            <div class="row">
+                <div class="col anime_page_synopsis py-4 px-3">
+                    <p>{{$animeData['synopsis']}}</p>
                 </div>
             </div>
+        </div>
 
     </div>
 
@@ -67,52 +67,102 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="vidcdn" role="tabpanel" aria-labelledby="vidcdn-tab">
-                    <video id="video-{{$animeId}}" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
+                    <video id="video-{{$animeId}}" loading="lazy" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
                     <script>
                         if (Hls.isSupported()) {
-                        var video = document.getElementById('video-{{$animeId}}');
-                        var hls = new Hls();
-                        hls.loadSource('{{$firstEpisodeVidcdnSources}}');
-                        hls.loadSource('{{$firstEpisodeVidcdnSources_bk}}');
-                        hls.attachMedia(video);
-                        }
-                    </script>
-                    <div class="anime_page_series">
-                        @for ($i = $animeData['totalEpisodes'] - 1; $i >= 0; $i--) <a id="{{$animeData['episodesList'][$i]['episodeId']}}" onclick="changeEpisode(this)" href="#video_player">{{$animeData['episodesList'][$i]['episodeNum']}}</a>@endfor   
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="streamsb" role="tabpanel" aria-labelledby="streamsb-tab">
-                    <video id="video-{{$animeId}}-2" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
-                    <script>
-                        if (Hls.isSupported()) {
-                            var video = document.getElementById('video-{{$animeId}}-2');
+                            var video = document.getElementById('video-{{$animeId}}');
                             var hls = new Hls();
-                            hls.loadSource('{{$firstEpisodeStreamsb}}');
+                            hls.loadSource('{{$firstEpisodeVidcdnSources}}');
+                            hls.loadSource('{{$firstEpisodeVidcdnSources_bk}}');
                             hls.attachMedia(video);
                         }
                     </script>
+                    <div class="container position-relative">
+                        <div class="anime_page_series">
+                            <div class="row anime_block rounded text-center">
+                                <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
+                                    <div class="carousel-inner" role="listbox">
+                                        @for ($i = $animeData['totalEpisodes'] - 1; $i >= 0; $i--)
+                                        @if ($i == $animeData['totalEpisodes']-1) <div class="carousel-item active"> @else <div class="carousel-item"> @endif
+                                                <div class="col anime_page_episode_link_block">
+                                                    <a id="{{$animeData['episodesList'][$i]['episodeId']}}" class="anime_page_episode_link" onclick="changeEpisode(this)" href="#video_player">Episode: {{$animeData['episodesList'][$i]['episodeNum']}}</a </div>
+                                                </div>
+                                            </div>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4 text-center">
+                        <form id="changeEpisodeForm" onsubmit="changeEpisodeForm(); return false;">
+                            <div class="col">
+                                <label class="form-label px-2">Change episode to:</label>
+                                <input id="changeEpisodeInput" type="number" class="form-control anime_page_episode_num_form px-2" required>
+                                <button type="submit" class="btn btn-primary px-2">Change</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="streamsb" role="tabpanel" aria-labelledby="streamsb-tab">
+                        <video loading="lazy" id="video-{{$animeId}}-2" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
+                        <script>
+                            if (Hls.isSupported()) {
+                                var video = document.getElementById('video-{{$animeId}}-2');
+                                var hls = new Hls();
+                                hls.loadSource('{{$firstEpisodeStreamsb}}');
+                                hls.attachMedia(video);
+                            }
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @include ('footer')
+        @include ('footer')
 </body>
 <script>
-  function changeEpisode(el) {
-    var episode = el.id;
-    var request = new XMLHttpRequest();
-    request.open('GET', '{{$vidcdnAnimeEpisodes}}'+ episode);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function() {
-        var episodeUrl = request.response;
-    var video = document.getElementById('video-{{$animeId}}');
-        if (Hls.isSupported()) {
-          var hls = new Hls();
-          hls.loadSource(episodeUrl['sources'][0]['file']);
-          hls.attachMedia(video);
+    function changeEpisode(el) {
+        var episode = el.id;
+        var request = new XMLHttpRequest();
+        request.open('GET', '{{$vidcdnAnimeEpisodes}}' + episode);
+        request.responseType = 'json';
+        request.send();
+        request.onload = function() {
+            var episodeUrl = request.response;
+            var video = document.getElementById('video-{{$animeId}}');
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(episodeUrl['sources'][0]['file']);
+                hls.attachMedia(video);
+            }
         }
     }
-}  
+
+    function changeEpisodeForm() {
+        var episode = document.getElementById('changeEpisodeInput').value;
+        var request = new XMLHttpRequest();
+        request.open('GET', '{{$vidcdnAnimeEpisodes}}{{$animeId}}-episode-' + episode);
+        request.responseType = 'json';
+        request.send();
+        request.onload = function() {
+            var episodeUrl = request.response;
+            var video = document.getElementById('video-{{$animeId}}');
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(episodeUrl['sources'][0]['file']);
+                hls.attachMedia(video);
+            }
+        }
+    }
 </script>
+<script src="{{ asset('js/carousel-script.js') }}"></script>
+
 </html>
