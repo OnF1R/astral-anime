@@ -6,81 +6,119 @@ use Illuminate\Http\Request;
 
 use App\Models\Anime;
 
+use Illuminate\Support\Facades\Http;
+
 class AnimeController extends Controller
 {
-    
+    public function animePopup(Request $request) {
 
-    public function index() {
-        $getpopularAnimes = 'http://127.0.0.1:3000/popular';
+        $animeId = $request->input('anime-id');
+
+        $animeData = Http::acceptJson()->get('http://127.0.0.1:3000/anime-details/' . $animeId);
+
+        $animeDetails = json_decode($animeData, true);
+        
+        dd($animeDetails);
+
+        return view('popup', compact('animeId','animeDetails'));
+
+    }
+
+    public function index()
+    {
+        $popularAnime = Http::acceptJson()->get('http://127.0.0.1:3000/popular');
+
+        $animeData = json_decode($popularAnime, true);
 
         $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
 
-        $getTopAiring ='http://127.0.0.1:3000/top-airing';
+        $topAiring = Http::acceptJson()->get('http://127.0.0.1:3000/top-airing');
 
+        $topAiringData = json_decode($topAiring, true);
+        
         $page = 1;
 
-        $jsonPopularAnime = file_get_contents($getpopularAnimes . '?page=' . $page);
+        // $jsonPopularAnime = file_get_contents($getpopularAnimes . '?page=' . $page);
 
-        $animeData = json_decode($jsonPopularAnime,true);
+        // $jsonAnimeDetails = file_get_contents($getAnimeDetails . $animeData['animeId']);
 
-        $jsonTopAiring = file_get_contents($getTopAiring);
-
-        $topAiringData = json_decode($jsonTopAiring, true);
+        // $animeDetails = json_decode($jsonAnimeDetails,true);
 
         //$animes = Anime::where('on_going', '=', '1')->get();
 
-        return view('main', compact('animeData','getAnimeDetails', 'topAiringData'));
+        return view('main', compact('animeData', 'getAnimeDetails', 'topAiringData'));
     }
 
-    public function animePage(Request $request) {
+    public function allAnimes(Request $request)
+    {
+        $page = $request->page;
 
+        $popularAnime = Http::acceptJson()->get('http://127.0.0.1:3000/popular' . '?page=' . $page);
+
+        $animeData = json_decode($popularAnime, true);
+
+        $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
+
+        //$animes = Anime::where('on_going', '=', '1')->get();
+
+        return view('all-animes', compact('animeData', 'getAnimeDetails'));
+    }
+
+    public function animePage(Request $request)
+    {
         $animeId = $request->id;
 
-        $animeDetails = 'http://127.0.0.1:3000/anime-details/' . $request->id;
+        $animeDetails = Http::acceptJson()->get('http://127.0.0.1:3000/anime-details/' . $animeId);
+
+        $animeData = json_decode($animeDetails, true);
 
         $vidcdnAnimeEpisodes = 'http://127.0.0.1:3000/vidcdn/watch/';
 
         $streamsbAnimeEpisodes = 'http://127.0.0.1:3000/streamsb/watch/';
-        
-        $jsonAnimeDetails = file_get_contents($animeDetails);
 
-        $animeData = json_decode($jsonAnimeDetails,true);
-        
-        if($firstEpisodeNum = array_search('0', array_column($animeData['episodesList'], 'episodeNum' )))
-        {}
-        else $firstEpisodeNum = array_search('1', array_column($animeData['episodesList'], 'episodeNum' ));
+        if ($firstEpisodeNum = array_search('0', array_column($animeData['episodesList'], 'episodeNum'))) {
+        } else $firstEpisodeNum = array_search('1', array_column($animeData['episodesList'], 'episodeNum'));
 
 
         // Vidcdn
-            
-            $firstEpisodeUrlVidcdn = $vidcdnAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
 
-            $jsonFirstEpisodeVidcdn = file_get_contents($firstEpisodeUrlVidcdn);
+        $firstEpisodeUrlVidcdn =  Http::acceptJson()->get($vidcdnAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId']);
 
-            $firstEpisodeDataVidcdn = json_decode($jsonFirstEpisodeVidcdn, true);
+        $firstEpisodeDataVidcdn = json_decode($firstEpisodeUrlVidcdn, true);
 
+        $error = [
+            "error" => []
+        ];
+
+        if($firstEpisodeDataVidcdn !== $error) {
             $firstEpisodeVidcdnSources = $firstEpisodeDataVidcdn['sources'][0]['file'];
-
             $firstEpisodeVidcdnSources_bk = $firstEpisodeDataVidcdn['sources_bk'][0]['file'];
+        } else {
+            $firstEpisodeVidcdnSources = 'nothing';
+            $firstEpisodeVidcdnSources_bk = 'nothing';
+        }
 
         // Vidcdn
 
         // StreamSB сделать плюс 0 серия
 
-            $firstEpisodeUrlStreamsb = $streamsbAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
+        $firstEpisodeUrlStreamsb = $streamsbAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
 
-            $jsonFirstEpisodeStreamsb = file_get_contents($firstEpisodeUrlStreamsb);
+        $jsonFirstEpisodeStreamsb = file_get_contents($firstEpisodeUrlStreamsb);
 
-            $firstEpisodeDataStreamsb = json_decode($jsonFirstEpisodeStreamsb, true);
+        $firstEpisodeDataStreamsb = json_decode($jsonFirstEpisodeStreamsb, true);
 
-            $firstEpisodeStreamsb = $firstEpisodeDataStreamsb['data'][0]['file'];
+        $firstEpisodeStreamsb = $firstEpisodeDataStreamsb['data'][0]['file'];
 
         // StreamSB
 
-        return view('anime-page', compact('animeData','animeId','vidcdnAnimeEpisodes','streamsbAnimeEpisodes', 'firstEpisodeVidcdnSources', 'firstEpisodeVidcdnSources_bk', 'firstEpisodeStreamsb'));
+        return view('anime-page', compact('animeData', 'animeId', 'vidcdnAnimeEpisodes', 'streamsbAnimeEpisodes', 'firstEpisodeVidcdnSources', 'firstEpisodeVidcdnSources_bk', 'firstEpisodeStreamsb'));
     }
 
-    public function create() {
+    
+
+    public function create()
+    {
 
         $anime_arr = [
             [
@@ -91,7 +129,7 @@ class AnimeController extends Controller
                 'release_year' => 2021,
                 'image' => 'anime.jpg',
                 'on_going' => 1,
-                'views' => 123,  
+                'views' => 123,
             ],
             [
                 'name' => 'another Anime name',
@@ -106,28 +144,31 @@ class AnimeController extends Controller
             ],
         ];
 
-        foreach($anime_arr as $item) {
+        foreach ($anime_arr as $item) {
             Anime::create($item);
         };
     }
 
-    public function update() {
+    public function update()
+    {
         $anime = Anime::find(3);
         dump($anime);
         $anime->update([
             'name' => 'updated',
         ]);
     }
-    
-    public function delete() {
+
+    public function delete()
+    {
         $anime = Anime::find(2);
         $anime->delete();
 
         $anime_with_trash = Anime::withTrashed()->find(2);
         $anime_with_trash->restore();
     }
-    
-    public function firstOrCreate() {
+
+    public function firstOrCreate()
+    {
         $another_anime = [
             'name' => 'Anime name',
             'description' => 'desc',
@@ -136,27 +177,30 @@ class AnimeController extends Controller
             'release_year' => 2021,
             'image' => 'anime.jpg',
             'on_going' => 1,
-            'views' => 123,  
+            'views' => 123,
         ];
 
-        $anime = Anime::firstOrCreate([
-            'name' => 'Anime name'
-        ],
-        [
-            'name' => 'ultra Anime name',
-            'description' => 'ultra desc',
-            'type' => 'ТВ Сериал',
-            'studio' => 'ufotable',
-            'release_year' => 2013,
-            'image' => 'anime.jpg',
-            'on_going' => 1,
-            'views' => 123,  
-        ]);
+        $anime = Anime::firstOrCreate(
+            [
+                'name' => 'Anime name'
+            ],
+            [
+                'name' => 'ultra Anime name',
+                'description' => 'ultra desc',
+                'type' => 'ТВ Сериал',
+                'studio' => 'ufotable',
+                'release_year' => 2013,
+                'image' => 'anime.jpg',
+                'on_going' => 1,
+                'views' => 123,
+            ]
+        );
 
         dump($anime->description);
     }
 
-    public function updateOrCreate() {
+    public function updateOrCreate()
+    {
         $another_anime = [
             'name' => 'Anime name',
             'description' => 'desc',
@@ -165,23 +209,25 @@ class AnimeController extends Controller
             'release_year' => 2021,
             'image' => 'anime.jpg',
             'on_going' => 1,
-            'views' => 123,  
+            'views' => 123,
         ];
 
-        $anime = Anime::updateOrCreate([
-            'name' => 'Anime name'
-        ],
-        [
-            'name' => 'Anime name',
-            'description' => 'ultra desc',
-            'type' => 'ТВ Сериал',
-            'studio' => 'ufotable',
-            'release_year' => 2018,
-            'image' => 'anime.jpg',
-            'on_going' => 1,
-            'views' => 123,  
-        ]);
-        dump($anime->name); 
-        dump($anime->description); 
+        $anime = Anime::updateOrCreate(
+            [
+                'name' => 'Anime name'
+            ],
+            [
+                'name' => 'Anime name',
+                'description' => 'ultra desc',
+                'type' => 'ТВ Сериал',
+                'studio' => 'ufotable',
+                'release_year' => 2018,
+                'image' => 'anime.jpg',
+                'on_going' => 1,
+                'views' => 123,
+            ]
+        );
+        dump($anime->name);
+        dump($anime->description);
     }
 }

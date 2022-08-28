@@ -2,14 +2,57 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
+.col-xs-five,
+.col-sm-five,
+.col-md-five,
+.col-lg-five {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-five {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-five {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-five {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-five {
+        width: 20%;
+        float: left;
+    }
+}
+
+
+
 .header {
     background-color: #2D2F30;
 }
 
+.position-center-in-block {
+    left: 50%;
+    transform: translate(-50%, -110%);
+}
+
+
 .img_main_anime_display_hot {
     width: 100%;
     height: 334px;
-    object-position: center top;
     object-fit: cover;
 }
 
@@ -147,23 +190,64 @@
 }
 
 .footer_info {
-    background-color: #1C1C1C;
-    height: 500px;
 }
 
 .footer_link {
-    background-color: #838181;
-    height: 250px;
 }
 
 .rounded_main_popular {
     border-radius: 20px;
 }
 
+body::-webkit-scrollbar {
+    width: 6px;               /* ширина scrollbar */
+  }
+  body::-webkit-scrollbar-track {
+    background: transparent;        /* цвет дорожки */
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: #5FCEF5;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    /* border: 3px solid orange;  padding вокруг плашки */
+  }
+
 * {
     color: #5FCEF5;
     margin: 0px;
     padding: 0px;
+}
+
+.result-container {
+    width: 234px; 
+    max-height: 500px;
+    border: 2px #5FCEF5 solid;
+    background-color: #2D2F30;
+    display: none;
+    overflow-y: scroll;
+}
+
+.result-container::-webkit-scrollbar {
+    width: 6px;               /* ширина scrollbar */
+  }
+  .result-container::-webkit-scrollbar-track {
+    background: transparent;        /* цвет дорожки */
+  }
+  .result-container::-webkit-scrollbar-thumb {
+    background-color: #5FCEF5;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    /* border: 3px solid orange;  padding вокруг плашки */
+  }
+
+.resultImg {
+    max-width: 100%;
+    text-align: center;
+    color: white;
+    padding: 0px 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .navbar {
@@ -257,8 +341,7 @@ button.close {
 }
 
 .popup_buttons {
-    top: 90%;
-    left: 22%;
+    transform: translate(2%, -110%);
 }
 
 .popup_anime_info {
@@ -312,7 +395,78 @@ button.close {
     color: white;
 }
 
+.popup_item {
+    position: relative;
+}
 
+.popup_info {
+    max-width: 100%;
+    text-align: center;
+    color: white;
+    padding: 0px 15px;
+    position: absolute; 
+    top: 64%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    transition: opacity 0.2s linear;
+}
+
+#loading {
+    width: 6rem;
+    height: 6rem;
+    border: 5px solid #f3f3f3;
+    border-top: 6px solid #5FCEF5;
+    border-radius: 100%;
+    margin: auto;
+    visibility: hidden;
+    animation: spin 1s infinite linear;
+    display: none;
+}
+#loading.display {
+    visibility: visible;
+    display: block;
+    z-index: 2;
+    position: absolute;
+    top: 25%;
+    left: 48%;
+    transform: translate(-50%, 50%);
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#loadingResult {
+    width: 6rem;
+    height: 6rem;
+    border: 5px solid #f3f3f3;
+    border-top: 6px solid #5FCEF5;
+    border-radius: 100%;
+    margin: auto;
+    visibility: hidden;
+    animation: spin 1s infinite linear;
+    display: none;
+}
+#loadingResult.display {
+    visibility: visible;
+    display: block;
+    z-index: 1;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 /* Popup */
 
@@ -375,8 +529,30 @@ button.close {
     width: auto;
 }
 
+.row .row-all-animes > * {
+    max-width: 20%;
+}
+
 .anime_page_synopsis {}
 
 .anime_page_series {}
 
 /* Anime page */
+
+/* Animation */
+
+.element-animation {
+    margin: 2rem 0;
+    font-size: 3rem;
+    
+    /* Скроем элемент в начальном состоянии */
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  .element-animation.element-show {
+    opacity: 1;
+    transition: all 1s;
+    transform: translateY(0%);
+  }
+
+/* Animation */
