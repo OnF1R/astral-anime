@@ -8,7 +8,7 @@
                         <div class="popup_item">
                             <img loading="lazy" id="popup-img" src="" alt="" class="img_main_anime_display_hot" style="height: 400px; overflow:hidden">
                             <div class="popup_info">
-                                <a id="popupWatchLink" href="{{ route('anime.page', ['id' => $anime['animeId']])}}"><button type="button" class="mb-2 btn popup_watch_button">Watch</button></a>
+                                <a id="popupWatchLink" href=""><button type="button" class="mb-2 btn popup_watch_button">Watch</button></a>
                                 <button class="mb-2 btn popup_watch_button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     Add to list
                                 </button>
