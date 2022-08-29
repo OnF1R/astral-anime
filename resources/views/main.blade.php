@@ -89,6 +89,5 @@
     </div>
     @include ('footer')
 </body>
-@include('fetch-api-popup')
 <script src="{{ asset('js/carousel-script.js') }}"></script>
 </html>
