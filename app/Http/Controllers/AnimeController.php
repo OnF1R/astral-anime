@@ -78,37 +78,41 @@ class AnimeController extends Controller
 
         if ($firstEpisodeNum = array_search('0', array_column($animeData['episodesList'], 'episodeNum'))) {
         } else $firstEpisodeNum = array_search('1', array_column($animeData['episodesList'], 'episodeNum'));
-
+        
 
         // Vidcdn
 
-        $firstEpisodeUrlVidcdn =  Http::acceptJson()->get($vidcdnAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId']);
+        if ($firstEpisodeNum) {
+            $firstEpisodeUrlVidcdn =  Http::acceptJson()->get($vidcdnAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId']);
 
-        $firstEpisodeDataVidcdn = json_decode($firstEpisodeUrlVidcdn, true);
+            $firstEpisodeDataVidcdn = json_decode($firstEpisodeUrlVidcdn, true);
+
+            $firstEpisodeVidcdnSources = $firstEpisodeDataVidcdn['sources'][0]['file'];
+            $firstEpisodeVidcdnSources_bk = $firstEpisodeDataVidcdn['sources_bk'][0]['file'];
+        }
+
+        else {
+            $firstEpisodeVidcdnSources = 'nothing';
+            $firstEpisodeVidcdnSources_bk = 'nothing';
+        }
 
         $error = [
             "error" => []
         ];
 
-        if($firstEpisodeDataVidcdn !== $error) {
-            $firstEpisodeVidcdnSources = $firstEpisodeDataVidcdn['sources'][0]['file'];
-            $firstEpisodeVidcdnSources_bk = $firstEpisodeDataVidcdn['sources_bk'][0]['file'];
-        } else {
-            $firstEpisodeVidcdnSources = 'nothing';
-            $firstEpisodeVidcdnSources_bk = 'nothing';
-        }
-
         // Vidcdn
 
         // StreamSB сделать плюс 0 серия
 
-        $firstEpisodeUrlStreamsb = $streamsbAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
+        // $firstEpisodeUrlStreamsb = $streamsbAnimeEpisodes . $animeData['episodesList'][$firstEpisodeNum]['episodeId'];
 
-        $jsonFirstEpisodeStreamsb = file_get_contents($firstEpisodeUrlStreamsb);
+        // $jsonFirstEpisodeStreamsb = file_get_contents($firstEpisodeUrlStreamsb);
 
-        $firstEpisodeDataStreamsb = json_decode($jsonFirstEpisodeStreamsb, true);
+        // $firstEpisodeDataStreamsb = json_decode($jsonFirstEpisodeStreamsb, true);
 
-        $firstEpisodeStreamsb = $firstEpisodeDataStreamsb['data'][0]['file'];
+        // $firstEpisodeStreamsb = $firstEpisodeDataStreamsb['data'][0]['file'];
+
+        $firstEpisodeStreamsb = "nothing";
 
         // StreamSB
 
