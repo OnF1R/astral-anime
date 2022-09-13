@@ -10,20 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class AnimeController extends Controller
 {
-    public function animePopup(Request $request) {
-
-        $animeId = $request->input('anime-id');
-
-        $animeData = Http::acceptJson()->get('http://127.0.0.1:3000/anime-details/' . $animeId);
-
-        $animeDetails = json_decode($animeData, true);
-        
-        dd($animeDetails);
-
-        return view('popup', compact('animeId','animeDetails'));
-
-    }
-
     public function index()
     {
         $popularAnime = Http::acceptJson()->get('http://127.0.0.1:3000/popular');
@@ -61,7 +47,7 @@ class AnimeController extends Controller
 
         //$animes = Anime::where('on_going', '=', '1')->get();
 
-        return view('all-animes', compact('animeData', 'getAnimeDetails'));
+        return view('all-animes', compact('animeData', 'getAnimeDetails', 'page'));
     }
 
     public function animePage(Request $request)

@@ -38,22 +38,34 @@
     }
 }
 
-
-
-.header {
-    background-color: #2D2F30;
-}
+/* img {
+    pointer-events: none;
+} */
 
 .position-center-in-block {
     left: 50%;
     transform: translate(-50%, -110%);
 }
 
+.header {
+    background-color: #2D2F30;
+}
+
+
 
 .img_main_anime_display_hot {
     width: 100%;
     height: 334px;
     object-fit: cover;
+    
+}
+
+.img_container {
+    overflow: hidden;
+}
+
+.works_item:hover img {
+    transform: scale(1.1);
 }
 
 .img_main_news {
@@ -143,14 +155,6 @@
     height: 0;
 }
 
-.anime_block {}
-
-.anime_name {
-    height: 30px;
-    overflow: hidden;
-
-}
-
 .popular_anime_main {
     transition: 0.7s;
     background-color: #2D2F30;
@@ -185,31 +189,31 @@
     overflow: hidden;
 }
 
-.popular_anime_main img:hover {
-    /* transform: scale(1.1); */
-}
+.footer_info {}
 
-.footer_info {
-}
-
-.footer_link {
-}
+.footer_link {}
 
 .rounded_main_popular {
     border-radius: 20px;
 }
 
 body::-webkit-scrollbar {
-    width: 6px;               /* ширина scrollbar */
-  }
-  body::-webkit-scrollbar-track {
-    background: transparent;        /* цвет дорожки */
-  }
-  body::-webkit-scrollbar-thumb {
-    background-color: #5FCEF5;    /* цвет плашки */
-    border-radius: 20px;       /* закругления плашки */
+    width: 6px;
+    /* ширина scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: transparent;
+    /* цвет дорожки */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #5FCEF5;
+    /* цвет плашки */
+    border-radius: 20px;
+    /* закругления плашки */
     /* border: 3px solid orange;  padding вокруг плашки */
-  }
+}
 
 * {
     color: #5FCEF5;
@@ -218,10 +222,10 @@ body::-webkit-scrollbar {
 }
 
 .result-container {
-    width: 234px; 
+    width: 356px;
     min-height: auto;
     max-height: 500px;
-    width: 360px;
+    transition: max-height 0.3s;
     border: 2px #5FCEF5 solid;
     background-color: #2D2F30;
     display: none;
@@ -230,16 +234,22 @@ body::-webkit-scrollbar {
 }
 
 .result-container::-webkit-scrollbar {
-    width: 6px;               /* ширина scrollbar */
-  }
-  .result-container::-webkit-scrollbar-track {
-    background: transparent;        /* цвет дорожки */
-  }
-  .result-container::-webkit-scrollbar-thumb {
-    background-color: #5FCEF5;    /* цвет плашки */
-    border-radius: 20px;       /* закругления плашки */
+    width: 6px;
+    /* ширина scrollbar */
+}
+
+.result-container::-webkit-scrollbar-track {
+    background: transparent;
+    /* цвет дорожки */
+}
+
+.result-container::-webkit-scrollbar-thumb {
+    background-color: #5FCEF5;
+    /* цвет плашки */
+    border-radius: 20px;
+    /* закругления плашки */
     /* border: 3px solid orange;  padding вокруг плашки */
-  }
+}
 
 .resultImg {
     max-width: 100%;
@@ -254,7 +264,7 @@ body::-webkit-scrollbar {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -264,7 +274,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     background-color: #B9E9FA;
     -webkit-box-shadow: 0 0 0px 1000px #B9E9FA inset;
-    transition: background-color  0s ease-in-out 0s;
+    transition: background-color 0s ease-in-out 0s;
 }
 
 .search_button {
@@ -285,12 +295,30 @@ select:-webkit-autofill:focus {
 html,
 body {
     background-color: #2D2F30;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 
 
+.control__prev__main {
+    position: absolute;
+    top: 50%;
+    right: 90%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    font-size: 3rem;
+}
 
+.control__next__main {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    font-size: 3rem;
+}
 
 a {
     transition: 0.3s all;
@@ -432,7 +460,7 @@ button.close {
     text-align: center;
     color: white;
     padding: 0px 15px;
-    position: absolute; 
+    position: absolute;
     top: 64%;
     left: 50%;
     transform: translate(-50%, 50%);
@@ -450,6 +478,7 @@ button.close {
     animation: spin 1s infinite linear;
     display: none;
 }
+
 #loading.display {
     visibility: visible;
     display: block;
@@ -459,10 +488,12 @@ button.close {
     left: 48%;
     transform: translate(-50%, 50%);
 }
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -479,6 +510,7 @@ button.close {
     animation: spin 1s infinite linear;
     display: none;
 }
+
 #loadingResult.display {
     visibility: visible;
     display: block;
@@ -487,10 +519,12 @@ button.close {
     top: 30%;
     left: 40%;
 }
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -513,7 +547,7 @@ button.close {
 }
 
 .anime_page_img {
-    width: 300px;
+     width: 300px; /* 300px */
     height: auto;
 }
 
@@ -540,15 +574,16 @@ button.close {
 .anime_page_episode_link_block {
     background-color: #2D2F30;
     border-right: 2px solid #5FCEF5;
-   
-    
+
+
 }
 
 .anime_page_episode_link {
     color: #5FCEF5;
 }
 
-.carousel-control-prev, .carousel-control-next {
+.carousel-control-prev,
+.carousel-control-next {
     width: 2%;
 }
 
@@ -557,7 +592,7 @@ button.close {
     width: auto;
 }
 
-.row .row-all-animes > * {
+.row .row-all-animes>* {
     max-width: 20%;
 }
 
@@ -572,15 +607,16 @@ button.close {
 .element-animation {
     margin: 2rem 0;
     font-size: 3rem;
-    
+
     /* Скроем элемент в начальном состоянии */
     opacity: 0;
     transform: translateY(100%);
-  }
-  .element-animation.element-show {
+}
+
+.element-animation.element-show {
     opacity: 1;
     transition: all 1s;
     transform: translateY(0%);
-  }
+}
 
 /* Animation */

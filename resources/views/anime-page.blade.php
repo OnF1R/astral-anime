@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include ('headlinks')
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <title>{{$animeData['animeTitle']}}</title>
+    
+
 </head>
 
 <body>
@@ -48,12 +49,6 @@
     </div>
 
     <div class="container">
-        <!-- <script>
-            fetch("https://gogoanime.herokuapp.com/vidcdn/watch/naruto-episode-220")
-                .then((response) => response.json())
-                .then((animelist) => console.log(animelist));
-        </script> -->
-
         <div id="video_player" class="anime_page_video_player mt-5">
             <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -67,7 +62,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="vidcdn" role="tabpanel" aria-labelledby="vidcdn-tab">
-                    <video id="video-{{$animeId}}" loading="lazy" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
+                    <!-- <video id="video-{{$animeId}}" loading="lazy" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
                     <script>
                         if (Hls.isSupported()) {
                             var video = document.getElementById('video-{{$animeId}}');
@@ -76,16 +71,19 @@
                             hls.loadSource('{{$firstEpisodeVidcdnSources_bk}}');
                             hls.attachMedia(video);
                         }
-                    </script>
+                    </script> -->
+                    <div class="my-5 embed-responsive embed-responsive-16by9">
+                        <video id="video" class="embed-responsive-item video-js vjs-default-skin" preload="none" controls></video>
+                    </div>
                     <div class="container position-relative">
                         <div class="anime_page_series">
                             <div class="row anime_block rounded text-center">
-                                <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
+                                <div id="carouselExampleControls" class="carousel slide" data-bs-interval="10000000" data-bs-ride="carousel">
                                     <div class="carousel-inner" role="listbox">
                                         @for ($i = $animeData['totalEpisodes'] - 1; $i >= 0; $i--)
                                         @if ($i == $animeData['totalEpisodes']-1) <div class="carousel-item active"> @else <div class="carousel-item"> @endif
                                                 <div class="col anime_page_episode_link_block">
-                                                    <a id="{{$animeData['episodesList'][$i]['episodeId']}}" class="anime_page_episode_link" onclick="changeEpisode(this)" href="#video_player">Episode: {{$animeData['episodesList'][$i]['episodeNum']}}</a </div>
+                                                    <a id="{{$animeData['episodesList'][$i]['episodeId']}}" class="anime_page_episode_link" onclick="changeEpisode(this)" href="#video">Episode: {{$animeData['episodesList'][$i]['episodeNum']}}</a>
                                                 </div>
                                             </div>
                                             @endfor
@@ -115,19 +113,77 @@
                     <div class="tab-pane fade" id="streamsb" role="tabpanel" aria-labelledby="streamsb-tab">
                         <video loading="lazy" id="video-{{$animeId}}-2" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
                         <script>
-                            if (Hls.isSupported()) {
-                                var video = document.getElementById('video-{{$animeId}}-2');
-                                var hls = new Hls();
-                                hls.loadSource('{{$firstEpisodeStreamsb}}');
-                                hls.attachMedia(video);
-                            }
+
                         </script>
                     </div>
                 </div>
             </div>
         </div>
-        @include ('footer')
+        <link href="https://vjs.zencdn.net/5.19.2/video-js.css" rel="stylesheet"><!-- https://videojs.com -->
+        <style type="text/css">
+            .video-js {
+                font-size: 1rem;
+                /* font-family: inherit; */
+            }
+
+            .video-js ul,
+            .vjs-menu .vjs-menu-content {
+                /* font-family: 'Poppins'; */
+            }
+
+
+            .video-js .vjs-big-play-button {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-color: #5FCEF5;
+                color: #5FCEF5;
+            }
+
+            .video-js:hover .vjs-big-play-button, .video-js .vjs-big-play-button:focus {
+                border-color: #5FCEF5;
+                color: white;
+                transition: 0.4s;
+                background-color: rgba(43, 51, 63, 0.7);
+            }
+
+            /* .video-js:hover .vjs-big-play-button:before, .video-js:hover .vjs-play-control:before {
+                color: white;
+                transition: 0.3s;
+            } */
+
+            .video-dimensions {
+                width: auto;
+                height: 730px;
+            }
+
+            /* .vjs-icon-play:before, .video-js .vjs-big-play-button:before, .video-js .vjs-play-control:before {
+                color: #5FCEF5;
+                transition: 0.3s;
+                
+            } */
+        </style>
+        <script src="https://vjs.zencdn.net/5.19.2/video.js"></script><!-- https://videojs.com -->
+        <script src="{{ asset('js/hls.min.js') }}"></script><!-- https://github.com/video-dev/hls.js -->
+        <script src="{{ asset('js/videojs5-hlsjs-source-handler.min.js') }}"></script><!-- https://github.com/streamroot/videojs-hlsjs-plugin -->
+        <script src="{{ asset('js/vjs-quality-picker.js') }}"></script><!-- https://github.com/streamroot/videojs-quality-picker -->
+        <script>
+            var player = videojs('video');
+
+            player.autoplay('false');
+
+            player.qualityPickerPlugin();
+
+            player.src({
+                src: '{{$firstEpisodeVidcdnSources}}',
+                type: 'application/x-mpegURL'
+            });
+
+            player.play();
+            player.pause();
+        </script>
 </body>
+@include ('footer')
 <script>
     function changeEpisode(el) {
         var episode = el.id;
@@ -137,12 +193,16 @@
         request.send();
         request.onload = function() {
             var episodeUrl = request.response;
-            var video = document.getElementById('video-{{$animeId}}');
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(episodeUrl['sources'][0]['file']);
-                hls.attachMedia(video);
-            }
+
+            var player = videojs('video');
+
+            player.qualityPickerPlugin();
+
+            player.src({
+                src: episodeUrl['sources'][0]['file'],
+                type: 'application/x-mpegURL'
+            });
+            player.pause();
         }
     }
 
@@ -154,12 +214,16 @@
         request.send();
         request.onload = function() {
             var episodeUrl = request.response;
-            var video = document.getElementById('video-{{$animeId}}');
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(episodeUrl['sources'][0]['file']);
-                hls.attachMedia(video);
-            }
+
+            var player = videojs('video');
+
+            player.qualityPickerPlugin();
+
+            player.src({
+                src: episodeUrl['sources'][0]['file'],
+                type: 'application/x-mpegURL'
+            });
+            player.pause();
         }
     }
 </script>

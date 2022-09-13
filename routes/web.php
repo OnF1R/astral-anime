@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AnimeController@index')->name('anime.main');
 
-Route::get('/all-anime', 'AnimeController@allAnimes')->name('anime.all');
+Route::get('/home', 'AnimeController@index')->name('home');
 
-Route::get('/popup', 'AnimeController@animePopup')->name('anime.popup');
+Route::get('/all-anime', 'AnimeController@allAnimes')->name('anime.all');
 
 Route::get('/test-carousel', 'AnimeController@index')->name('anime.carousel');
 
@@ -34,3 +34,7 @@ Route::get('/anime/delete', 'AnimeController@delete');
 Route::get('/anime/first_or_create', 'AnimeController@firstOrCreate');
 
 Route::get('/anime/update_or_create', 'AnimeController@updateOrCreate');
+
+Auth::routes();
+
+Route::get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->name('profile');
