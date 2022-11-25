@@ -46,7 +46,7 @@ function loadPopup(el) {
                 var count = animelist.genres.length;
                 var i = 0;
                 while (count--) {
-                    
+
                     var a = document.createElement('a');
                     var linkText = document.createTextNode(animelist.genres[i]);
                     a.appendChild(linkText);
@@ -111,18 +111,19 @@ function searchAnime() {
             console.log(animelist);
             if (animelist.length === 0) {
                 let resultInfo = document.getElementById('resultInfo');
+                resultContainer.style.transform = 'translate(-5%, -33%)';
                 let nothingFoundText = document.createTextNode("Nothing found");
                 let nothingFoundP = document.createElement('p');
-                nothingFoundP.setAttribute("class", "m-2")
+                nothingFoundP.setAttribute("class", "m-2 mt-5 mb-3")
                 nothingFoundP.appendChild(nothingFoundText);
                 resultInfo.appendChild(nothingFoundP);
                 window.scrollBy(0, 0)
             } else {
                 for (let i = 0; i < animelist.length; i++) {
 
-                    let resultMain = document.getElementById('resultMain');
                     let resultInfo = document.getElementById('resultInfo');
-
+                    resultInfo.setAttribute("class", "mt-5");
+                    resultContainer.style.transform = 'translate(-5%, -6%)';
                     let img = document.createElement('img');
                     img.setAttribute("class", "img_main_anime_display_hot works_image")
                     img.src = animelist[i].animeImg;
@@ -178,6 +179,8 @@ function searchAnime() {
                 // document.getElementById('resultAnimePageLink').href = "anime-page?id=" + JSON.stringify(animelist[i].animeId).slice(1, -1);
             }
         })
+
+    
 
 
     // while(count--) {

@@ -1,6 +1,6 @@
 @include('fetch-api-popup')
 <nav class="navbar mt-3 sticky-top">
-    <div class="container header">
+    <div class="container rounded header">
         <a href="{{ route('anime.main') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
             <h3>Astral</h3>
             <img src="{{asset('images/logo/logo.png')}}" width="96" height="96" class="rounded-circle ms-4" alt="">
@@ -37,12 +37,12 @@
         @endguest
         <div class="position-relative text-center"> <!-- me-5 style -->
             <form onsubmit="searchAnime(); return false;" action="" class="d-flex" method="get">
-                <input id="searchForm" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required style="z-index: 2;">
+                <input id="searchForm" class="form-control me-2" type="search" pattern="^[a-zA-Z0-9\s]+$" placeholder="Search" aria-label="Search" required style="z-index: 2;">
                 <button class="btn search_button" type="submit" style="z-index: 2;">Search</button>
             </form>
-            <div id="result-container" class="result-container position-absolute rounded mt-1">
+            <div id="result-container" class="result-container position-absolute rounded">
                 <div id="loadingResult" class="loadingResult"></div>
-                <div id="resultInfo" class="resultInfo"></div>
+                <div id="resultInfo" class=""></div>
             </div>
         </div>
     </div>

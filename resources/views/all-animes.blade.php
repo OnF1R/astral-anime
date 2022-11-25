@@ -14,6 +14,75 @@
 <body>
     @include('header')
 
+
+    <div class="main_anime_trend_container container-fluid mt-5 text-center fs-2 text-color-blue">FILTER</div>
+    <div class="main_anime_list_container container-fluid mt-4 position-relative">
+        <div class="container">
+            <form>
+                <div class="mb-3">
+                    <label for="genreSelector" class="form-label">Genre</label>
+                    <select name="genre" id="genreSelect">
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="cars">Cars</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="crime">Crime</option>
+                        <option value="dementia">Dementia</option>
+                        <option value="demons">Demons</option>
+                        <option value="drama">Drama</option>
+                        <option value="dub">Dub</option>
+                        <option value="ecchi">Ecchi</option>
+                        <option value="family">Family</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="game">Game</option>
+                        <option value="gourmet">Gourmet</option>
+                        <option value="harem">Harem</option>
+                        <option value="historical">Historical</option>
+                        <option value="horror">Horror</option>
+                        <option value="josei">Josei</option>
+                        <option value="kids">Kids</option>
+                        <option value="magic">Magic</option>
+                        <option value="martial-arts">Martial arts</option>
+                        <option value="mecha">Mecha</option>
+                        <option value="military">Military</option>
+                        <option value="Mmusic">Mmusic</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="parody">Parody</option>
+                        <option value="police">Police</option>
+                        <option value="romance">Romance</option>
+                        <option value="samurai">Samurai</option>
+                        <option value="school">School</option>
+                        <option value="sci-fi">Sci-fi</option>
+                        <option value="seinen">Seinen</option>
+                        <option value="shoujo">Shoujo</option>
+                        <option value="shoujo-ai">Shoujo-ai</option>
+                        <option value="shounen">Shounen</option>
+                        <option value="shounen-ai">Shounen-ai</option>
+                        <option value="slice-of-Life">Slice of Life</option>
+                        <option value="space">Space</option>
+                        <option value="sports">Sports</option>
+                        <option value="super-power">Super power</option>
+                        <option value="supernatural">Supernatural</option>
+                        <option value="suspense">Suspense</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="vampire">Vampire</option>
+                        <option value="yaoi">Yaoi</option>
+                        <option value="yuri">Yuri</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="ReleaseDateInput" class="form-label">Password</label>
+                    <input type="number" min="1900" max="2099" step="1" value="2018" />
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button type="submit" class="btn search_button">Search</button>
+            </form>
+        </div>
+    </div>
+
     <div class="main_anime_trend_container container-fluid mt-5 text-center fs-2 text-color-blue">ANIME LIST</div>
     <div class="main_anime_list_container container-fluid mt-4 position-relative">
         <div class="container">

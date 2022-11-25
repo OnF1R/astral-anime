@@ -225,9 +225,8 @@ body::-webkit-scrollbar-thumb {
     width: 356px;
     min-height: auto;
     max-height: 500px;
-    transition: max-height 0.3s;
     border: 2px #5FCEF5 solid;
-    background-color: #2D2F30;
+    background-color: #202122;
     display: none;
     overflow-y: scroll;
     transform: translate(-5%, -6%);
@@ -620,3 +619,88 @@ button.close {
 }
 
 /* Animation */
+
+/* Popout video */
+
+.intro {
+    width: 100%;
+    background: rgba(100, 100, 100, 0.1);
+    position: relative;
+  }
+  
+  .popout-video {
+    width: 100%;
+    position: relative;
+  }
+  .popout-video--popout {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 450px;
+    max-width: 100%;
+    height: auto;
+    -webkit-animation: popin 0.5s ease-in-out forwards;
+            animation: popin 0.5s ease-in-out forwards;
+  }
+  @-webkit-keyframes popin {
+    to {
+      top: 0;
+    }
+  }
+  @keyframes popin {
+    to {
+      top: 0;
+    }
+  }
+  .popout-video--popout:hover .popout-video__controls {
+    opacity: 1;
+  }
+  .popout-video video {
+    width: 100%;
+    vertical-align: middle;
+  }
+  .popout-video__controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    background: black;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, black 100%);
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+  .popout-video__controls .close-video {
+    width: 1.77rem;
+    height: 1.7rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+    border-radius: 50%;
+    transition: background 0.25s ease;
+  }
+  .popout-video__controls .close-video:hover {
+    background: rgba(50, 50, 50, 0.4);
+  }
+  .popout-video__controls .close-video:before, .popout-video__controls .close-video:after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    width: 1rem;
+    height: 2px;
+    background: #fff;
+  }
+  .popout-video__controls .close-video:before {
+    transform: rotate(45deg);
+  }
+  .popout-video__controls .close-video:after {
+    transform: rotate(-45deg);
+  }
+
+/* Popout video */

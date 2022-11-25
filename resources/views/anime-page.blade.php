@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include ('headlinks')
     <title>{{$animeData['animeTitle']}}</title>
-    
-
+    <link href="{{ asset('css/videojs-overlay.css') }}" rel='stylesheet'>
 </head>
 
 <body>
@@ -47,8 +46,7 @@
         </div>
 
     </div>
-
-    <div class="container">
+    <div id="videoContainer" class="container">
         <div id="video_player" class="anime_page_video_player mt-5">
             <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -62,18 +60,12 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="vidcdn" role="tabpanel" aria-labelledby="vidcdn-tab">
-                    <!-- <video id="video-{{$animeId}}" loading="lazy" width="100%" height="auto" preload="none" controls class="videoCentered"></video>
-                    <script>
-                        if (Hls.isSupported()) {
-                            var video = document.getElementById('video-{{$animeId}}');
-                            var hls = new Hls();
-                            hls.loadSource('{{$firstEpisodeVidcdnSources}}');
-                            hls.loadSource('{{$firstEpisodeVidcdnSources_bk}}');
-                            hls.attachMedia(video);
-                        }
-                    </script> -->
-                    <div class="my-5 embed-responsive embed-responsive-16by9">
-                        <video id="video" class="embed-responsive-item video-js vjs-default-skin" preload="none" controls></video>
+                    <div class="intro">
+                        <div class="popout-video">
+                            <div class="my-5 embed-responsive embed-responsive-16by9 position-relative" id="video-container">
+                                <video onloadeddata="showNextEpisodeButton(); videoPopup();" name="1" id="video" class="embed-responsive-item video-js vjs-default-skin" preload="auto" controls></video>
+                            </div>
+                        </div>
                     </div>
                     <div class="container position-relative">
                         <div class="anime_page_series">
@@ -83,7 +75,7 @@
                                         @for ($i = $animeData['totalEpisodes'] - 1; $i >= 0; $i--)
                                         @if ($i == $animeData['totalEpisodes']-1) <div class="carousel-item active"> @else <div class="carousel-item"> @endif
                                                 <div class="col anime_page_episode_link_block">
-                                                    <a id="{{$animeData['episodesList'][$i]['episodeId']}}" class="anime_page_episode_link" onclick="changeEpisode(this)" href="#video">Episode: {{$animeData['episodesList'][$i]['episodeNum']}}</a>
+                                                    <a id="{{$animeData['episodesList'][$i]['episodeNum']}}" class="anime_page_episode_link" onclick="changeEpisode(this)" href="#video">Episode: {{$animeData['episodesList'][$i]['episodeNum']}}</a>
                                                 </div>
                                             </div>
                                             @endfor
@@ -140,7 +132,8 @@
                 color: #5FCEF5;
             }
 
-            .video-js:hover .vjs-big-play-button, .video-js .vjs-big-play-button:focus {
+            .video-js:hover .vjs-big-play-button,
+            .video-js .vjs-big-play-button:focus {
                 border-color: #5FCEF5;
                 color: white;
                 transition: 0.4s;
@@ -157,6 +150,12 @@
                 height: 730px;
             }
 
+            .video-js .vjs-overlay-background {
+                width: auto;
+                padding: 10px 15px;
+                background-color: rgba(95, 206, 245, 0.6);
+            }
+
             /* .vjs-icon-play:before, .video-js .vjs-big-play-button:before, .video-js .vjs-play-control:before {
                 color: #5FCEF5;
                 transition: 0.3s;
@@ -169,9 +168,6 @@
         <script src="{{ asset('js/vjs-quality-picker.js') }}"></script><!-- https://github.com/streamroot/videojs-quality-picker -->
         <script>
             var player = videojs('video');
-
-            player.autoplay('false');
-
             player.qualityPickerPlugin();
 
             player.src({
@@ -185,10 +181,13 @@
 </body>
 @include ('footer')
 <script>
-    function changeEpisode(el) {
-        var episode = el.id;
+    function changeEpisodeButton() {
+        var episode = document.getElementById('video').getAttribute('name');
+        episode++;
+        var link = '{{$vidcdnAnimeEpisodes}}{{$animeId}}-episode-' + episode;
+
         var request = new XMLHttpRequest();
-        request.open('GET', '{{$vidcdnAnimeEpisodes}}' + episode);
+        request.open('GET', link);
         request.responseType = 'json';
         request.send();
         request.onload = function() {
@@ -203,6 +202,34 @@
                 type: 'application/x-mpegURL'
             });
             player.pause();
+            document.getElementById('video').setAttribute('name', episode);
+            document.getElementById('nextEpisodeButton').remove();
+            document.getElementById('nextEpisodeButtonControlBar').remove();
+        }
+    }
+
+    function changeEpisode(el) {
+        var episode = el.id;
+        var link = '{{$vidcdnAnimeEpisodes}}{{$animeId}}-episode-' + episode;
+        var request = new XMLHttpRequest();
+        request.open('GET', link);
+        request.responseType = 'json';
+        request.send();
+        request.onload = function() {
+            var episodeUrl = request.response;
+
+            var player = videojs('video');
+
+            player.qualityPickerPlugin();
+
+            player.src({
+                src: episodeUrl['sources'][0]['file'],
+                type: 'application/x-mpegURL'
+            });
+            player.pause();
+            document.getElementById('video').setAttribute('name', episode);
+            document.getElementById('nextEpisodeButton').remove();
+            document.getElementById('nextEpisodeButtonControlBar').remove();
         }
     }
 
@@ -224,9 +251,128 @@
                 type: 'application/x-mpegURL'
             });
             player.pause();
+            document.getElementById('video').setAttribute('name', episode);
+            document.getElementById('nextEpisodeButton').remove();
+            document.getElementById('nextEpisodeButtonControlBar').remove();
         }
+
+    }
+
+    function showNextEpisodeButton() {
+        var episodeNum = document.getElementById('video').getAttribute('name');
+        var player = window.player = videojs('video');
+        if (Number(episodeNum) != Number('{{$animeData["totalEpisodes"]}}')) {
+            player.overlay({
+                content: '<a onclick="changeEpisodeButton(); return false;" style="text-decoration: none; color: #5FCEF5" title="Show next episode">Next Episode</a>',
+                debug: false,
+                overlays: [{
+                    start: Math.floor(player.duration() - 95),
+                    end: 'end',
+                    align: 'bottom-right'
+                }]
+            });
+        } else {
+            player.overlay({
+                content: '<a onclick="changeEpisodeButton(); return false;" style="text-decoration: none; color: #5FCEF5" title="Show next episode">Next Episode</a>',
+                debug: false,
+                overlays: [{
+                    start: 'end',
+                    end: 'end',
+                    align: 'bottom-right'
+                }]
+            });
+        }
+        // el.onloadeddata = function(event) {
+        //     const {
+        //         videoHeight,
+        //         videoWidth,
+        //         duration
+        //     } = event.srcElement
+        //     console.log(duration)
+        //     var episodeCurrentTime = setInterval(function() {
+        //         console.log(el.currentTime);
+        //         if (el.currentTime > duration - 100) {
+        //             clearInterval(episodeCurrentTime);
+        //             let nextEpisodeButton = document.createElement('div');
+        //             let nextEpisodeButtonText = document.createElement('p');
+        //             let buttonText = document.createTextNode("Next episode ->");
+        //             nextEpisodeButton.setAttribute("class", "position-absolute");
+        //             nextEpisodeButton.setAttribute("id", "nextEpisodeButton");
+        //             nextEpisodeButton.style.top = "50%";
+        //             nextEpisodeButton.style.left = "50%";
+
+        //             nextEpisodeButton.style.backgroundColor = "red";
+        //             nextEpisodeButtonText.appendChild(buttonText);
+        //             nextEpisodeButton.appendChild(nextEpisodeButtonText);
+        //             document.getElementById('video').appendChild(nextEpisodeButton);
+        //             var player = videojs('video');
+        //             var myButton = player.controlBar.addChild("button", {});
+        //             var myButtonDom = myButton.el();
+        //             myButtonDom.innerHTML = '>>';
+        //             myButtonDom.setAttribute("id", "nextEpisodeButtonControlBar")
+        //             myButtonDom.onclick = function() {
+        //                 alert('Hello')
+        //             };
+
+
+        //         }
+        //     }, 5000);
+        // }
     }
 </script>
 <script src="{{ asset('js/carousel-script.js') }}"></script>
+<script src="{{ asset('js/videojs-overlay.js') }}"></script>
+<script>
+    function videoPopup() {
+        const introContainer = document.querySelector('.intro');
+        const videoContainer = introContainer.querySelector('.popout-video');
+        const video = videoContainer.querySelector('video');
+        const videoPlayer = videoContainer.querySelector('#video');
+        let videoHeight = videoContainer.offsetHeight;
+        let videoWidth = videoContainer.offsetWidth;
+        console.log(videoHeight,videoWidth);
+        let rect = videoContainer.getBoundingClientRect();
+        console.log(rect.top, rect.right, rect.bottom, rect.left);
+        let coord = Math.round(rect.bottom + pageYOffset);
+        const closeVideoBtn = document.querySelector('.close-video');
+
+        let popOut = true;
+
+        introContainer.style.height = `${videoHeight}px`;
+
+        window.addEventListener('scroll', function(e) {
+            if (window.scrollY > coord) {
+                // only pop out the video if it wasnt closed before
+                if (popOut) {
+                    videoContainer.classList.add('popout-video--popout');
+                    // set video container off the screen for the slide in animation
+                    videoContainer.style.top = `-${videoHeight}px`;
+                    videoPlayer.style.width = '640px';
+                    videoPlayer.style.height = '360px';
+                    videoPlayer.style.marginTop = `96px`;
+                }
+            } else {
+                videoContainer.classList.remove('popout-video--popout');
+                videoContainer.style.top = `0px`;
+                videoPlayer.style.marginTop = `0px`;
+                videoPlayer.style.width = `${videoWidth}px`;
+                videoPlayer.style.height = `${videoHeight}px`;
+                popOut = true;
+            }
+        });
+
+        // close the video and prevent from opening again on scrolling + pause the video
+        closeVideoBtn.addEventListener('click', function() {
+            videoContainer.classList.remove('popout-video--popout');
+            video.pause();
+            popOut = false;
+        });
+
+        window.addEventListener('resize', function() {
+            videoHeight = videoContainer.offsetHeight;
+            introContainer.style.height = `${videoHeight}px`;
+        });
+    }
+</script>
 
 </html>

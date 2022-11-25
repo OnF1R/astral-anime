@@ -8,7 +8,7 @@
     @include ('headlinks')
     <link rel="stylesheet" href="{{ asset('css/own-carousel.css') }}">
     <script src="{{ asset('js/own-carousel.js') }}"></script>
-    <title>Document</title>
+    <title>Astal</title>
 </head>
 
 <body>
@@ -43,8 +43,9 @@
                         </div>
                     </div>
                     <div class="own-carousel__control">
-                        <button class="control__prev control__prev__main"><</button>
-                        <button class="control__next control__next__main">></button>
+                        <button class="control__prev control__prev__main">
+                            << /button>
+                                <button class="control__next control__next__main">></button>
                     </div>
                 </div>
             </div>
@@ -79,6 +80,7 @@
             </div> @endif
             @endforeach
         </div>
+        <div class="mt-4 text-center"><a href="{{ route('anime.all') }}"><button class="btn main_page_watch_button">Watch more</button></a></div>
     </div>
     @include ('footer')
 </body>
