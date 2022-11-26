@@ -44,8 +44,11 @@
                     </div>
                     <div class="own-carousel__control">
                         <button class="control__prev control__prev__main">
-                            << /button>
-                                <button class="control__next control__next__main">></button>
+                            <
+                        </button>
+                        <button class="control__next control__next__main">
+                            >
+                        </button>
                     </div>
                 </div>
             </div>
