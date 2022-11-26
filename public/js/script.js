@@ -32,7 +32,7 @@ function loadPopup(el) {
     }, 1250);
 
     var animeDetails =
-        fetch("http://127.0.0.1:3000/anime-details/" + animeId)
+        fetch("https://gogoanime.consumet.org/anime-details/" + animeId)
             .then((response) => {
                 return response.json();
             })
@@ -50,7 +50,7 @@ function loadPopup(el) {
                     var a = document.createElement('a');
                     var linkText = document.createTextNode(animelist.genres[i]);
                     a.appendChild(linkText);
-                    a.href = "http://127.0.0.1:3000/genre/" + animelist.genres[i];
+                    a.href = "https://gogoanime.consumet.org/genre/" + animelist.genres[i];
 
                     if (count === 0) {
                         document.getElementById('popup-genres').appendChild(a);
