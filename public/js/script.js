@@ -103,7 +103,7 @@ function searchAnime() {
 
     document.getElementById('result-container').style.display = "block";
     searchValue = document.getElementById('searchForm').value;
-    fetch("http://127.0.0.1:3000/search?keyw=" + searchValue)
+    fetch("https://gogoanime.consumet.org/search?keyw=" + searchValue)
         .then((response) => {
             return response.json();
         })
