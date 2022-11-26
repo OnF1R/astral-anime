@@ -10,15 +10,21 @@ use Illuminate\Support\Facades\Http;
 
 class AnimeController extends Controller
 {
+    const ANIME_POPULAR = "https://gogoanime.consumet.org/popular";
+    const ANIME_DETAILS = "https://gogoanime.consumet.org/anime-details";
+    const TOP_AIRING = "https://gogoanime.consumet.org/top-airing";
+    const VIDCDN_WATCH = "https://gogoanime.consumet.org/vidcdn/watch/";
+    const STREAMSB_WATCH = "https://gogoanime.consumet.org/streamsb/watch/";
+
     public function index()
     {
-        $popularAnime = Http::acceptJson()->get('http://127.0.0.1:3000/popular');
+        $popularAnime = Http::acceptJson()->get(self::ANIME_POPULAR);
 
         $animeData = json_decode($popularAnime, true);
 
-        $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
+        $getAnimeDetails = self::ANIME_DETAILS;
 
-        $topAiring = Http::acceptJson()->get('http://127.0.0.1:3000/top-airing');
+        $topAiring = Http::acceptJson()->get(self::TOP_AIRING);
 
         $topAiringData = json_decode($topAiring, true);
         
@@ -39,11 +45,11 @@ class AnimeController extends Controller
     {
         $page = $request->page;
 
-        $popularAnime = Http::acceptJson()->get('http://127.0.0.1:3000/popular' . '?page=' . $page);
+        $popularAnime = Http::acceptJson()->get(self::ANIME_POPULAR . '?page=' . $page);
 
         $animeData = json_decode($popularAnime, true);
 
-        $getAnimeDetails = 'http://127.0.0.1:3000/anime-details/';
+        $getAnimeDetails = self::ANIME_DETAILS;
 
         //$animes = Anime::where('on_going', '=', '1')->get();
 
@@ -54,13 +60,13 @@ class AnimeController extends Controller
     {
         $animeId = $request->id;
 
-        $animeDetails = Http::acceptJson()->get('http://127.0.0.1:3000/anime-details/' . $animeId);
+        $animeDetails = Http::acceptJson()->get(self::ANIME_DETAILS . '/' . $animeId);
 
         $animeData = json_decode($animeDetails, true);
 
-        $vidcdnAnimeEpisodes = 'http://127.0.0.1:3000/vidcdn/watch/';
+        $vidcdnAnimeEpisodes = self::VIDCDN_WATCH;
 
-        $streamsbAnimeEpisodes = 'http://127.0.0.1:3000/streamsb/watch/';
+        $streamsbAnimeEpisodes = self::STREAMSB_WATCH;
 
         if ($firstEpisodeNum = array_search('0', array_column($animeData['episodesList'], 'episodeNum'))) {
         } else $firstEpisodeNum = array_search('1', array_column($animeData['episodesList'], 'episodeNum'));
